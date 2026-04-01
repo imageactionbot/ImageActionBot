@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Use ImageActionBot - Advanced Practical Guide</title>
+  <meta name="description" content="Step-by-step advanced guide to use ImageActionBot: setup, image anchors, OCR extraction, document layouts, CSV/XLSX input, optimization, and troubleshooting.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#1f7a43">
+  <link rel="canonical" href="https://www.imageactionbot.com/how-to-use.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Use ImageActionBot - Advanced Guide">
+  <meta property="og:description" content="Learn how to automate repetitive desktop tasks with image matching, OCR, and data-driven workflows.">
+  <meta property="og:url" content="https://www.imageactionbot.com/how-to-use.html">
+  <meta property="og:image" content="https://www.imageactionbot.com/IMAGEACTIONBOT.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Use ImageActionBot">
+  <meta name="twitter:description" content="Complete setup and advanced usage guide for ImageActionBot automation workflows.">
+  <meta name="twitter:image" content="https://www.imageactionbot.com/IMAGEACTIONBOT.png">
+  <link rel="icon" href="./IMAGEACTIONBOT.png" type="image/png">
+  <link rel="stylesheet" href="./main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="./index.html" aria-label="ImageActionBot home">
+        <img src="./IMAGEACTIONBOT.png" alt="ImageActionBot logo" width="44" height="44">
+        <span>ImageActionBot</span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="./index.html#features">Features</a>
+        <a href="./index.html#use-cases">Use Cases</a>
+        <a href="./how-to-use.html" aria-current="page">How to Use</a>
+        <a href="./index.html#social">Social</a>
+        <a class="btn btn-sm js-download-link" data-download-link href="https://pub-7df420d78ae8472e9817557d4ae9fd10.r2.dev/ImageActionBot_Setup_1.0.0.exe" target="_blank" rel="noopener noreferrer">Download</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero guide-hero">
+      <div class="container">
+        <p class="badge">ImageActionBot Usage Handbook</p>
+        <h1>How to use ImageActionBot like a power user</h1>
+        <p class="lead">This guide gives you a complete path from beginner to advanced workflows, so you can turn daily repetitive work into fast, reliable, and scalable automation.</p>
+        <div class="release-line">
+          <span>Current Version: <strong data-download-version>1.0.0</strong></span>
+          <span>Last Updated: <strong data-download-date>2026-04-01</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container prose">
+        <h2>1) Installation and first launch</h2>
+        <ul>
+          <li>Download the latest setup file and run the installer.</li>
+          <li>After launch, start with a clean workspace.</li>
+          <li>Keep system scaling at 100% or a predictable zoom level for stable image matching.</li>
+        </ul>
+        <p><a class="btn btn-primary js-download-link" data-download-link href="https://pub-7df420d78ae8472e9817557d4ae9fd10.r2.dev/ImageActionBot_Setup_1.0.0.exe" target="_blank" rel="noopener noreferrer">Download Latest Setup</a></p>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container prose">
+        <h2>2) Build your first reliable workflow</h2>
+        <ol>
+          <li>Capture a template image from your target screen.</li>
+          <li>Define steps: click, type, wait, OCR-read, and conditional action.</li>
+          <li>Tune execution delay and confidence thresholds.</li>
+          <li>Run a short test before full production execution.</li>
+        </ol>
+        <p>Tip: Add a verification step between critical actions to reduce failure rates.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container prose">
+        <h2>3) Advanced image automation strategy</h2>
+        <h3>Template quality</h3>
+        <ul>
+          <li>Capture unique UI regions; avoid generic icons.</li>
+          <li>Avoid blurry screenshots; clean PNG anchors work best.</li>
+          <li>Maintain consistent screen resolution across runs.</li>
+        </ul>
+        <h3>Click precision</h3>
+        <ul>
+          <li>Use offset clicks when exact center clicks are not safe.</li>
+          <li>Add pre-checks before sensitive actions to prevent incorrect clicks.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container prose">
+        <h2>4) OCR and document-driven automation</h2>
+        <ul>
+          <li>Keep OCR regions tightly scoped for better text accuracy.</li>
+          <li>Apply text normalization after OCR (trim, replace, cleanup).</li>
+          <li>After mapping field ROIs in document layouts, run a test batch.</li>
+          <li>For high-value fields, keep a manual confirmation fallback.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container prose">
+        <h2>5) CSV/XLSX bulk task automation</h2>
+        <ul>
+          <li>Align column names with step names.</li>
+          <li>Use sample rows for a dry run before full batch execution.</li>
+          <li>Maintain error-row logging to simplify reruns.</li>
+          <li>Split long jobs into smaller batches to improve reliability.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container prose">
+        <h2>6) Troubleshooting and optimization</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Issue</th>
+                <th>Likely reason</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Template not found</td>
+                <td>UI changed or low confidence</td>
+                <td>Recapture template, adjust confidence, verify scale</td>
+              </tr>
+              <tr>
+                <td>Wrong click position</td>
+                <td>Anchor mismatch</td>
+                <td>Use stronger anchor and calibrated offset</td>
+              </tr>
+              <tr>
+                <td>OCR incorrect text</td>
+                <td>Noisy region</td>
+                <td>Tight ROI, better contrast, post-clean text</td>
+              </tr>
+              <tr>
+                <td>Slow run speed</td>
+                <td>Excess delays</td>
+                <td>Tune waits per step and keep only required checks</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-cta">
+      <div class="container">
+        <h2>Start automating your daily work today</h2>
+        <p>Convert manual repetitive processes into structured automation and unlock daily productivity gains.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary js-download-link" data-download-link href="https://pub-7df420d78ae8472e9817557d4ae9fd10.r2.dev/ImageActionBot_Setup_1.0.0.exe" target="_blank" rel="noopener noreferrer">Download ImageActionBot</a>
+          <a class="btn btn-ghost" href="./index.html">Back to Landing Page</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p><strong>ImageActionBot</strong> - Automation software for daily repetitive desktop work.</p>
+      <div class="footer-links">
+        <a href="./index.html">Home</a>
+        <a class="js-download-link" data-download-link href="https://pub-7df420d78ae8472e9817557d4ae9fd10.r2.dev/ImageActionBot_Setup_1.0.0.exe" target="_blank" rel="noopener noreferrer">Download</a>
+        <a href="https://t.me/imageactionbot" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://www.youtube.com/@ImageActionBot" target="_blank" rel="noopener noreferrer">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./main.js" defer></script>
+</body>
+</html>

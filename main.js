@@ -1,150 +1,60 @@
-/**
- * Landing ad strip — loads ONLY from assets/ad.json (same folder as this site).
- * - "image" can be relative (e.g. assets/banner.png) or full https URL
- * - "link" = click target (https recommended)
- * If JSON or image fails, the strip hides (no public admin UI).
- *
- * Optional: window.IAB_ASSET_AD_JSON = "https://yoursite.com/assets/ad.json" for absolute path
- */
 (function () {
-  function assetAdUrl() {
-    if (typeof window.IAB_ASSET_AD_JSON === "string" && window.IAB_ASSET_AD_JSON.trim())
-      return window.IAB_ASSET_AD_JSON.trim();
-    return new URL("assets/ad.json", window.location.href).href;
+  "use strict";
+
+  var FALLBACK = {
+    product_name: "ImageActionBot",
+    version: "1.0.0",
+    file_name: "ImageActionBot_Setup_1.0.0.exe",
+    download_url: "https://pub-7df420d78ae8472e9817557d4ae9fd10.r2.dev/ImageActionBot_Setup_1.0.0.exe",
+    last_updated: "2026-04-01"
+  };
+
+  function setText(selector, value) {
+    if (!value) return;
+    var nodes = document.querySelectorAll(selector);
+    nodes.forEach(function (el) {
+      el.textContent = value;
+    });
   }
 
-  function safeUi(fn) {
-    try {
-      if (typeof fn === "function") fn();
-    } catch (e) {}
+  function setDownloadLinks(url) {
+    if (!url) return;
+    var links = document.querySelectorAll("[data-download-link]");
+    links.forEach(function (link) {
+      link.setAttribute("href", url);
+    });
+    setText("[data-download-link-text]", url);
   }
 
-  function getStrip() {
-    return document.getElementById("iab-ad-strip");
+  function applyReleaseData(data) {
+    var release = Object.assign({}, FALLBACK, data || {});
+    setDownloadLinks(release.download_url);
+    setText("[data-download-version]", release.version);
+    setText("[data-download-date]", release.last_updated);
+    setText("[data-download-filename]", release.file_name);
+    setText("[data-download-product]", release.product_name);
   }
 
-  function showStripLoading() {
-    var strip = getStrip();
-    if (!strip) return;
-    strip.hidden = false;
-    strip.classList.remove("is-collapsed");
-    strip.classList.add("is-loading");
-  }
-
-  function hideStrip() {
-    var strip = getStrip();
-    if (!strip) return;
-    strip.classList.add("is-collapsed");
-    strip.classList.remove("is-loading");
-    setTimeout(function () {
-      strip.hidden = true;
-    }, 400);
-  }
-
-  function revealStripReady() {
-    var strip = getStrip();
-    if (!strip) return;
-    strip.hidden = false;
-    strip.classList.remove("is-loading", "is-collapsed");
-  }
-
-  function resolveImageUrl(raw) {
-    var s = (raw || "").trim();
-    if (!s) return "";
-    if (/^https?:\/\//i.test(s)) return s;
-    try {
-      return new URL(s, window.location.href).href;
-    } catch (e) {
-      return s;
-    }
-  }
-
-  function fillBannerSlot(container, imagePath, link) {
-    if (!container || !imagePath || !link) return false;
-    container.innerHTML = "";
-    var wrap = document.createElement("a");
-    wrap.href = link;
-    wrap.target = "_blank";
-    wrap.rel = "noopener noreferrer";
-    wrap.className = "ad-banner-link";
-    wrap.setAttribute("aria-label", "Sponsored link — opens in new tab");
-    var img = document.createElement("img");
-    img.src = imagePath;
-    img.alt = "Sponsor";
-    img.loading = "eager";
-    wrap.appendChild(img);
-    container.appendChild(wrap);
-    return true;
-  }
-
-  function fetchLocalAd(onOk, onFail) {
-    var url = assetAdUrl();
-    fetch(url, {
-      method: "GET",
-      headers: { Accept: "application/json" },
-      cache: "no-store",
-    })
-      .then(function (r) {
-        if (!r.ok) throw new Error("http_" + r.status);
-        return r.json();
+  function init() {
+    applyReleaseData(FALLBACK);
+    fetch("./download.json", { cache: "no-store" })
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("Failed to read download.json");
+        }
+        return response.json();
       })
-      .then(function (data) {
-        if (!data || typeof data !== "object") throw new Error("shape");
-        if (data.ad_type !== "banner") throw new Error("ad_type");
-        var imgRaw = (data.image || "").trim();
-        var link = (data.link || "").trim();
-        if (!imgRaw || !link) throw new Error("empty");
-        var imgUrl = resolveImageUrl(imgRaw);
-        if (!/^https?:\/\//i.test(link)) throw new Error("link_scheme");
-        onOk(imgUrl, link);
+      .then(function (json) {
+        applyReleaseData(json);
       })
       .catch(function () {
-        onFail();
+        // Keep fallback data active when JSON is unavailable.
       });
   }
 
-  function loadAd() {
-    var top = document.getElementById("iab-ad-top");
-    if (!top || !getStrip()) return;
-
-    showStripLoading();
-
-    function onFail() {
-      safeUi(hideStrip);
-    }
-
-    function tryShow(imgUrl, link) {
-      var probe = new Image();
-      probe.onload = function () {
-        safeUi(function () {
-          if (fillBannerSlot(top, imgUrl, link)) revealStripReady();
-          else hideStrip();
-        });
-      };
-      probe.onerror = function () {
-        safeUi(hideStrip);
-      };
-      probe.src = imgUrl;
-    }
-
-    fetchLocalAd(tryShow, onFail);
-  }
-
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", loadAd);
+    document.addEventListener("DOMContentLoaded", init);
   } else {
-    loadAd();
+    init();
   }
-})();
-
-/** #download in URL → official ZIP on Telegram (bookmark / shared link). */
-(function () {
-  var TG = "https://t.me/imageactionbot/6";
-  function redirectIfDownloadHash() {
-    if (window.location.hash === "#download") {
-      window.location.replace(TG);
-    }
-  }
-  redirectIfDownloadHash();
-  window.addEventListener("hashchange", redirectIfDownloadHash);
 })();

@@ -1,45 +1,38 @@
-# ImageActionBot — landing site
+# ImageActionBot Website
 
-Static site for **ImageActionBot** (Light Edition). Served well from **GitHub Pages**.
+SEO-friendly landing website with dynamic release metadata.
 
-**GitHub repo description (copy-paste):**  
-`Official ImageActionBot website — download the Windows automation tool (ZIP via Telegram t.me/imageactionbot/6). Static site, GitHub Pages.`
+## Quick update workflow (no HTML edit needed)
 
-## Go live on GitHub Pages
+Update only `download.json`:
 
-1. Create a new repository on [GitHub](https://github.com/new) (e.g. `imageactionbot-website`). **Do not** add a README if you will push this folder as the first commit.
+- `version`: release version text
+- `file_name`: installer name
+- `download_url`: direct setup link
+- `last_updated`: release date in `YYYY-MM-DD`
 
-2. In this folder (PowerShell or Git Bash):
+Example:
 
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial site: landing + assets"
-   git branch -M main
-   git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git
-   git push -u origin main
-   ```
+```json
+{
+  "version": "1.0.0",
+  "file_name": "ImageActionBot_Setup_1.0.1.exe",
+  "download_url": "https://your-link/ImageActionBot_Setup_1.0.1.exe",
+  "last_updated": "2026-04-10"
+}
+```
 
-3. On GitHub: **Settings → Pages → Build and deployment**  
-   - Source: **Deploy from a branch**  
-   - Branch: **main** / folder **/ (root)**  
-   - Save.
+All download buttons and release labels update automatically via `main.js`.
 
-4. After a minute or two your site will be at:
+## Optional ad metadata
 
-   `https://YOUR_USER.github.io/YOUR_REPO/`
+`ad.json` includes a `last_updated` field and placeholder ad metadata for future banner integration.
 
-   Use **exact casing** for your username/repo in the URL.
+## Files
 
-## Before you publish
-
-- Add **`assets/IMAGEACTIONBOT.PNG`** (logo) if not already in the repo.
-- Optional banner: **`assets/banner.png`** + edit **`assets/ad.json`** (top strip on the site).
-
-## Download link
-
-ZIP download points to Telegram: [t.me/imageactionbot/6](https://t.me/imageactionbot/6)
-
-## Custom domain (optional)
-
-In the same **Pages** settings, set your domain and add the DNS records GitHub shows. For `www.imageactionbot.com`, use your DNS host’s docs + [GitHub custom domain guide](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
+- `index.html` - primary landing page
+- `how-to-use.html` - advanced usage guide
+- `main.css` - responsive styling
+- `main.js` - JSON metadata loader
+- `download.json` - editable release details
+- `ad.json` - optional ad metadata

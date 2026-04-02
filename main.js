@@ -2,7 +2,7 @@
   "use strict";
 
   var FALLBACK = {
-    product_name: "ImageActionBot",
+    product_name: "imageactionbot",
     version: "1.0.0",
     file_name: "imageactionbot_setup.exe",
     download_url: "https://pub-7df420d78ae8472e9817557d4ae9fd10.r2.dev/imageactionbot_setup.exe",
